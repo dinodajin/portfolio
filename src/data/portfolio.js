@@ -30,9 +30,9 @@ export const PROFILE = {
 
     ],
     contacts: [
-      { label: "GitHub", url: "https://github.com" },
-      { label: "Velog", url: "https://velog.io" },
-      { label: "Email", url: "mailto:your-email@example.com" }
+      { label: "GitHub", url: "https://github.com/dinodajin" },
+      { label: "Velog", url: "https://velog.io/@da8411/posts" },
+      { label: "Email", url: "mailto:djbrachio@gmail.com" }
     ]
   }
 };
