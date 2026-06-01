@@ -10,9 +10,9 @@ export const PROFILE = {
     avatar: "/assets/dajin.jpg",
     intro: "하드웨어 제어부터 웹 풀스택까지 도메인의 경계 없이 실무 기술 레이어를 확장해 왔습니다. 시스템 전체 구조(End-to-End)를 이해하는 넓은 시야로 최적의 엔지니어링 솔루션을 도출합니다.",
     skills: {
-      "Embedded Hardware & Systems": ["STM32 (Cortex-M)", "Jetson Orin Nano", "Raspberry Pi", "ROS (Robot Operating System)", "Linux Environment"],
+      "Embedded Hardware & Systems": ["STM32", "Jetson Orin Nano", "Raspberry Pi", "ROS", "Linux Environment"],
       "AI Models & Optimization": ["YOLO (v5/v8/v11)", "PyTorch", "TensorRT Engine", "ONNX Optimization", "Python / FastAPI"],
-      "Web Full-Stack Development": ["JavaScript", "React.js", "Next.js", "Java / Spring Boot", "Node.js"],
+      "Web Full-Stack Development": ["JavaScript", "React.js", "Java / Spring Boot", "Node.js"],
       "Tools & Core Languages": ["C/C++", "Android NDK", "Git", "Docker", "CMake"]
     },
     certifications: [
