@@ -3,9 +3,8 @@ import { PROFILE, PROJECTS } from "../data/portfolio";
 import Tag from "../components/Tag";
 import MonoLabel from "../components/MonoLabel";
 import StatBox from "../components/StatBox";
-import SideArrow from "../components/SideArrow";
 
-export default function HomePage({ onNavigate, onNavigateAbout, onNext }) {
+export default function HomePage({ onNavigate, onNavigateAbout }) {
   const [count, setCount] = useState(0);
   const [btnHov, setBtnHov] = useState(false);
 
@@ -20,8 +19,7 @@ export default function HomePage({ onNavigate, onNavigateAbout, onNext }) {
 
   return (
     <div className="anim-fade" style={{ padding: "72px 0 80px", position: "relative" }}>
-      {/* 다음 코스(About)로 연동되는 오른쪽 고정 화살표 */}
-      <SideArrow dir="right" onClick={onNext} disabled={false} />
+      {/* 팝업 UX 구조 개편에 따라 우측 고정 SideArrow 컴포넌트 완전 제거 */}
 
       {/* Top Navigation Bar */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "80px" }}>
@@ -39,6 +37,7 @@ export default function HomePage({ onNavigate, onNavigateAbout, onNext }) {
         >ABOUT ME ↗</button>
       </div>
 
+      {/* Hero Headline */}
       <div style={{ marginBottom: "32px" }}>
         <div style={{ 
           fontFamily: "'JetBrains Mono', monospace", 
@@ -49,7 +48,7 @@ export default function HomePage({ onNavigate, onNavigateAbout, onNext }) {
           letterSpacing: "-0.04em", 
           marginBottom: "16px",
           display: "flex",
-          alignItems: "center",
+          alignItems: "center", 
           gap: "24px"
         }}>
           <span style={{ 
@@ -77,7 +76,7 @@ export default function HomePage({ onNavigate, onNavigateAbout, onNext }) {
         </div>
       </div>
 
-      {/* 시각적 인지 향상을 위한 대형 인트로 커넥션 배너 버튼 */}
+      {/* 엔지니어 소개 대형 배너 버튼 */}
       <div style={{ marginBottom: "48px" }}>
         <button
           onClick={onNavigateAbout}
