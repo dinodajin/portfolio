@@ -46,6 +46,33 @@ export default function AboutPage({ onBack, onNext, animDir }) {
 
       <hr style={{ border: "none", borderTop: "1px solid #E4E2D8", marginBottom: "40px" }} />
 
+      {/* 신설된 자격증 & 어학 성적 섹션 영역 */}
+      <div style={{ marginBottom: "56px" }}>
+        <MonoLabel style={{ display: "block", marginBottom: "20px" }}>Certifications & Language</MonoLabel>
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", 
+          gap: "12px" 
+        }}>
+          {about.certifications && about.certifications.map((cert, idx) => (
+            <div key={idx} style={{ 
+              display: "flex", 
+              justifyContent: "space-between", 
+              alignItems: "center",
+              padding: "12px 16px", 
+              background: "#fff", 
+              border: "1px solid #E4E2D8", 
+              borderRadius: "8px" 
+            }}>
+              <span style={{ fontSize: "14px", fontWeight: 700, color: "#1a1a1a" }}>{cert.name}</span>
+              <span style={{ fontSize: "12px", color: "#9A9890", fontFamily: "'Pretendard Variable', sans-serif" }}>{cert.issuer}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <hr style={{ border: "none", borderTop: "1px solid #E4E2D8", marginBottom: "40px" }} />
+
       {/* Section 3: Education & Career Timeline */}
       <div style={{ marginBottom: "56px" }}>
         <MonoLabel style={{ display: "block", marginBottom: "24px" }}>Education & Experience</MonoLabel>

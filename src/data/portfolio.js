@@ -15,6 +15,12 @@ export const PROFILE = {
       "Web Full-Stack Development": ["JavaScript", "React.js", "Next.js", "Java / Spring Boot", "Node.js"],
       "Tools & Core Languages": ["C/C++", "Android NDK", "Git", "Docker", "CMake"]
     },
+    certifications: [
+      { name: "정보처리기사", issuer: "한국산업인력공단" },
+      { name: "SQLD (SQL 개발자)", issuer: "한국데이터산업진흥원" },
+      { name: "ADsP (데이터분석 준전문가)", issuer: "한국데이터산업진흥원" },
+      { name: "TOEIC Speaking IH", issuer: "YBM (어학 성적)" }
+    ],
     timeline: [
       { date: "2025.07 - 현재", title: "삼성 청년 SW·AI 아카데미(SSAFY) 14기", desc: "임베디드 트랙" },
       { date: "2024.06 - 2024.12", title: "LG전자 DX School 1기 수료", desc: "데이터 분석을 통한 BX, CX, DX 전략 수립" },
