@@ -39,8 +39,55 @@ export const PROFILE = {
 
 export const PROJECTS = [
   {
-    id: "sarvis",
+    id: "btaa",
     index: "01",
+    title: "BTAA",
+    subtitle: "BTSP Ticket AI-Assistant",
+    tags: ["LangGraph", "vLLM", "DSPy", "BGE Embedding", "Redis Queue"],
+    accentColor: "#2D6BE4",
+    accentLight: "#EBF1FD",
+    category: "CASE STUDY · AI AGENT SYSTEM",
+    headline: "삼성 기지국 VoC 관리 포털(BTSP) 내 지능형 티켓 분석 및 담당 부서 배정 자동화 Multi-Agent 시스템 구축",
+    description: "글로벌 통신사 고객들로부터 유입되는 기지국 장비 관련 기술 문제(Ticket)를 AI가 실시간으로 분석하고 최적의 담당 부서를 자동 매칭하는 엔지니어링 솔루션입니다. 10만 건 규모의 대용량 레거시 데이터 환경에서 LLM 병목과 자원 제약을 극복하고 Top-5 예측 정확도 99.5%를 달성하며 대기업 실무 프로세스를 자동화했습니다.",
+    stats: [
+      { label: "AI 프레임워크", value: "LangGraph / DSPy" },
+      { label: "코어 모델", value: "gpt-oss-120b / vLLM" },
+      { label: "배정 정확도", value: "Top-5 99.5% 달성" },
+      { label: "데이터 스케일", value: "10만 건 정제 및 자산화" },
+    ],
+    features: [
+      { icon: "■", title: "Multi-Agent 파이프라인", desc: "LangGraph를 기반으로 티켓 요약, 내용 보강, Defect 1차 분류 및 담당 부서 추론 단계를 분업화했습니다.", badge: "LangGraph" },
+      { icon: "■", title: "고성능 벡터 검색 매칭", desc: "BGE-m3 모델과 Re-ranker 아키텍처 및 HNSW 인덱스를 통해 문맥적으로 가장 유사한 과거 티켓을 정밀 추출합니다.", badge: "RAG Engine" },
+      { icon: "■", title: "실무 밀착형 편의 기능", desc: "설명 가능한 AI를 구현하기 위해 다국어 structured output 기반 추천 근거 및 Long TAT 경과 관리 기능을 연동했습니다.", badge: "UX Optimization" },
+    ],
+    sections: [
+      {
+        part: "Part I",
+        title: "Product Walkthrough",
+        subtitle: "지능형 워크플로우 및 현업 편의 기능 설계",
+        items: [
+          { sectionNum: "SECTION 01", sectionTitle: "자동 배정 및 수집 파이프라인", content: "5분 주기로 BTSP 포털에서 미할당된 오픈 티켓을 실시간 수집하고, 약 40초 내외의 추론 가속화를 거쳐 자동 배정을 수행하는 엔지니어링 파이프라인 구현." },
+          { sectionNum: "SECTION 02", sectionTitle: "설명 가능한 AI 및 글로벌 지원", content: "외국인 관리자와의 협업을 고려하여 AI 에이전트의 의사결정 추론 과정을 정형화(Structured Output)하고 한국어와 영어 추천 근거를 동시 출력하도록 보장." },
+          { sectionNum: "SECTION 03", sectionTitle: "운영 효율화 대시보드", content: "1순위 추천 채택률 및 수동 재할당 비율을 실시간 추적하고, 30일 이상 미해결된 Long TAT 티켓을 경과순으로 정렬하여 BTSP 페이지로 즉시 연결하는 관리 환경 구축." },
+        ],
+      },
+      {
+        part: "Part II",
+        title: "Architecture Deep Dive",
+        subtitle: "자원 제약 극복과 추론 정확도 고도화를 위한 기술적 접근",
+        items: [
+          { sectionNum: "SECTION 04", sectionTitle: "비동기 분산 큐 기반 인프라 안정화", content: "수십 건의 티켓이 동시 유입될 때 발생하는 LLM 병목 문제를 해결하기 위해 Redis Queue(RQ) 기반 비동기 태스크 큐 아키텍처를 도입하여 시스템 가용성 확보." },
+          { sectionNum: "SECTION 05", sectionTitle: "대용량 DB I/O 최적화 및 배치 처리", content: "1,500줄 규모의 레거시 쿼리와 해외 DB 환경의 과부하를 방지하기 위한 배치 처리를 구현하고, 운영체제 수준의 Named Pipe(FIFO) 스트리밍 방식을 도입하여 데이터 인출 효율을 극대화." },
+          { sectionNum: "SECTION 06", sectionTitle: "DSPy 프로그래밍 및 Few-shot 최적화", content: "기존의 수동 프롬프트 엔지니어링 한계를 극복하기 위해 DSPy 프레임워크를 도입, 프롬프팅 과정을 프로그래밍 언어 형태로 추상화하고 ReAct 로직 기반 알고리즘 고도화." },
+          { sectionNum: "SECTION 07", sectionTitle: "점진적 데이터 임베딩 파이프라인", content: "전체 데이터를 상시 재임베딩하는 연산 비용을 최소화하기 위해, DB 변경 사항을 감지하여 신규 및 수정된 데이터만 선별 처리하는 자동 지식 최신화 파이프라인 구축." },
+          { sectionNum: "SECTION 08", sectionTitle: "피드백 루프 기반의 지식 베이스 축적", content: "오배정 케이스 발생 시 운영자의 수동 교정 사유와 피드백 데이터를 LLM의 자체 Tool로 재구성하여 벡터 DB에 점진적 반영함으로써 과거 편향을 지우고 지속적인 정확도 향상 유도." },
+        ],
+      },
+    ],
+  },
+  {
+    id: "sarvis",
+    index: "02",
     title: "SARVIS",
     subtitle: "Smart Monitor Arm with AI",
     tags: ["C++", "On-Device AI", "TensorRT", "Jetson Nano"],
