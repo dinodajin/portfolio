@@ -6,79 +6,69 @@ import AboutPage from "./pages/AboutPage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 
 export default function App() {
-  // 전역 라우터 상태 관리: "home" | "about" | number(project 인덱스)
-  const [page, setPage] = useState("home");
-  const [animDir, setAnimDir] = useState("none"); // 슬라이딩 트랜지션 방향
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [activeProjectIdx, setActiveProjectIdx] = useState(null); // null 이면 닫힘, 숫자(index)면 해당 프로젝트 팝업 열림
 
-  const goToProject = useCallback((idx, dir = "none") => {
-    setAnimDir(dir);
-    setPage(idx);
-  }, []);
+  const openAbout = useCallback(() => setAboutOpen(true), []);
+  const closeAbout = useCallback(() => setAboutOpen(false), []);
 
-  const goHome = useCallback(() => {
-    setAnimDir("right");
-    setPage("home");
-  }, []);
+  const openProject = useCallback((idx) => setActiveProjectIdx(idx), []);
+  const closeProject = useCallback(() => setActiveProjectIdx(null), []);
 
-  const goAbout = useCallback((dir = "left") => {
-    setAnimDir(dir);
-    setPage("about");
-  }, []);
-
-  const goNext = useCallback(() => {
-    if (page === "home") {
-      goAbout("left");
-    } else if (page === "about") {
-      goToProject(0, "left");
-    } else if (typeof page === "number" && page < PROJECTS.length - 1) {
-      goToProject(page + 1, "left");
+  const nextProject = useCallback(() => {
+    if (activeProjectIdx !== null && activeProjectIdx < PROJECTS.length - 1) {
+      setActiveProjectIdx(activeProjectIdx + 1);
     }
-  }, [page, goAbout, goToProject]);
+  }, [activeProjectIdx]);
 
-  const goPrev = useCallback(() => {
-    if (page === "about") {
-      goHome();
-    } else if (page === 0) {
-      goAbout("right");
-    } else if (typeof page === "number" && page > 0) {
-      goToProject(page - 1, "right");
+  const prevProject = useCallback(() => {
+    if (activeProjectIdx !== null && activeProjectIdx > 0) {
+      setActiveProjectIdx(activeProjectIdx - 1);
     }
-  }, [page, goHome, goAbout, goToProject]);
+  }, [activeProjectIdx]);
 
-  // 키보드 내비게이션 바인딩 (ArrowLeft, ArrowRight)
+  // ESC 키 클릭 시 열려있는 모든 팝업창을 닫아주는 글로벌 편리성 UX 바인딩
   useEffect(() => {
-    const handler = (e) => {
-      if (e.key === "ArrowRight") goNext();
-      if (e.key === "ArrowLeft") goPrev();
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        closeAbout();
+        closeProject();
+      }
     };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [goNext, goPrev]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [closeAbout, closeProject]);
+
+  // 팝업이 하나라도 열려있으면 뒷배경 홈 화면의 스크롤을 고정(가둠)하여 버그를 방지합니다.
+  useEffect(() => {
+    if (aboutOpen || activeProjectIdx !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => { document.body.style.overflow = "unset"; };
+  }, [aboutOpen, activeProjectIdx]);
 
   return (
     <div style={{ maxWidth: "840px", margin: "0 auto", padding: "0 28px", position: "relative", zIndex: 1 }}>
-      {page === "home" && (
-        <HomePage 
-          onNavigate={(idx) => goToProject(idx, "none")} 
-          onNavigateAbout={() => goAbout("left")} 
-          onNext={goNext}
-        />
+      
+      <HomePage 
+        onNavigate={openProject} 
+        onNavigateAbout={openAbout} 
+      />
+
+      {aboutOpen && (
+        <AboutPage onClose={closeAbout} />
       )}
-      {page === "about" && (
-        <AboutPage 
-          onBack={goPrev} 
-          onNext={goNext} 
-          animDir={animDir} 
-        />
-      )}
-      {typeof page === "number" && (
+
+      {activeProjectIdx !== null && (
         <CaseStudyPage
-          project={PROJECTS[page]}
-          onBack={goHome}
-          onPrev={goPrev}
-          onNext={goNext}
-          hasNext={page < PROJECTS.length - 1}
-          animDir={animDir}
+          project={PROJECTS[activeProjectIdx]}
+          onClose={closeProject}
+          onPrev={prevProject}
+          onNext={nextProject}
+          hasPrev={activeProjectIdx > 0}
+          hasNext={activeProjectIdx < PROJECTS.length - 1}
         />
       )}
     </div>

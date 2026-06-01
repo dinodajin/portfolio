@@ -39,16 +39,40 @@ export default function HomePage({ onNavigate, onNavigateAbout, onNext }) {
         >ABOUT ME ↗</button>
       </div>
 
-      {/* Hero Headline */}
       <div style={{ marginBottom: "32px" }}>
-        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "clamp(80px, 14vw, 140px)", fontWeight: 700, lineHeight: 0.95, color: "#1a1a1a", letterSpacing: "-0.04em", marginBottom: "20px" }}>
-          <span style={{ color: "#C8C6BC" }}>0{count}</span>
+        <div style={{ 
+          fontFamily: "'JetBrains Mono', monospace", 
+          fontSize: "clamp(80px, 12vw, 120px)", 
+          fontWeight: 700, 
+          lineHeight: 1, 
+          color: "#1a1a1a", 
+          letterSpacing: "-0.04em", 
+          marginBottom: "16px",
+          display: "flex",
+          alignItems: "center",
+          gap: "24px"
+        }}>
+          <span style={{ 
+            fontSize: "14px", 
+            fontWeight: 700, 
+            color: "#9A9890", 
+            letterSpacing: "0.15em", 
+            transform: "translateY(2px)" 
+          }}>
+            PROJECTS :
+          </span>
+          <span style={{ color: "#E4E2D8", fontWeight: 800 }}>0{count}</span>
         </div>
+        
         <div style={{ display: "flex", alignItems: "flex-start", gap: "24px" }}>
           <div style={{ width: "3px", background: "#1a1a1a", flexShrink: 0, alignSelf: "stretch", minHeight: "64px", borderRadius: "2px" }} />
           <div>
-            <h1 style={{ fontSize: "clamp(32px, 6vw, 56px)", fontWeight: 800, lineHeight: 1.1, whiteSpace: "pre-line", marginBottom: "16px" }}>{PROFILE.headline}</h1>
-            <p style={{ fontSize: "16px", color: "#7A7870", lineHeight: 1.7, whiteSpace: "pre-line" }}>{PROFILE.subheadline}</p>
+            <h1 style={{ fontSize: "clamp(32px, 6vw, 56px)", fontWeight: 800, lineHeight: 1.15, whiteSpace: "pre-line", marginBottom: "16px" }}>
+              {PROFILE.headline}
+            </h1>
+            <p style={{ fontSize: "16px", color: "#7A7870", lineHeight: 1.7, whiteSpace: "pre-line" }}>
+              {PROFILE.subheadline}
+            </p>
           </div>
         </div>
       </div>
