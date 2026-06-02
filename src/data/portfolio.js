@@ -86,8 +86,104 @@ export const PROJECTS = [
     ],
   },
   {
-    id: "sarvis",
+    id: "onguard",
     index: "02",
+    title: "OnGuard",
+    subtitle: "Real-time On-Device Deepfake Detector",
+    tags: ["Android NDK", "Qualcomm QNN", "NNAPI", "Whisper Base", "gpt-5-mini"],
+    accentColor: "#16A34A",
+    accentLight: "#EDFAF3",
+    category: "On-Device AI",
+    headline: "온디바이스 AI 기반 영상 통화 중 실시간 딥페이크 및 딥보이스 탐지 및 차단으로 적극적인 보호 대응 서비스",
+    description: "딥페이크와 딥보이스를 활용한 신종 AI 보이스피싱 범죄가 급증하고 있습니다. 조사에 따르면 전 세계 인구의 0.01%만이 딥페이크를 정확하게 식별할 수 있으며, 최근 캄보디아 조직형 사기단 사건에서는 딥페이크 영상통화를 통해 100억 원 규모의 대형 피해가 발생했습니다. 남녀노소 누구나 무방비로 노출될 수 있는 위험을 방지하기 위해, 통화 중 실시간으로 위조를 판별하고 차단하는 '적극적인 대응 서비스'가 필요합니다. 탐지부터 보호까지 한번에 적극적으로 도와주는, OnGuard를 소개합니다.",
+    
+    // 📊 그라파나 실측 지표 기반 핵심 요약 데이터 전면 수정
+    stats: [
+      { label: "아키텍처", value: "Clean / Android NDK / SDK" },
+      { label: "가속화 전 Latency", value: "8,050 ms (Max Bottleneck)" }, // 그라파나 실측 지표 매핑
+      { label: "가속화 후 Latency", value: "748 ms (HTP Accelerated)" }, // 그라파나 실측 지표 매핑
+      { label: "추론 속도 개선", value: "약 90.7% 레이턴시 단축" },
+    ],
+    
+    features: [
+      { icon: "■", title: "하드웨어 가속 및 폴백 파이프라인", desc: "NNAPI 및 QNN 기술을 활용하여 HTP, GPU, CPU 순으로 연산 자원을 자동 폴백 할당하는 유연한 온디바이스 최적화를 달성했습니다.", badge: "Optimization" },
+      { icon: "■", title: "멀티모달 하이브리드 탐지", desc: "CLIP 기반 ForensicAdapter의 CAM 연산과 Whisper 오디오 가속 분석을 결합하여 가짜 프레임과 목소리 변조를 동시 판별합니다.", badge: "Multi-Modal AI" },
+      { icon: "■", title: "접근성 기반 실시간 금융 차단", desc: "위험 감지 시 Foreground Service 접근성 권한을 활용하여 주요 금융앱들의 터치를 즉각 제한하고 화면을 강제 잠금합니다.", badge: "Security" },
+    ],
+    images: {
+      architecture: "/assets/onguard/system_architecture.png", 
+      techFlow: "/assets/onguard/hw_fallback_flow.png", 
+      grafana: "/assets/onguard/grafana_telemetry.png", 
+      uiScreenshots: [
+        { src: "/assets/onguard/screen_detection.png", caption: "실시간 비디오 콜 프레임 기반 딥페이크 검출 및 의심 영역 시각화" },
+        { src: "/assets/onguard/screen_bank_block.png", caption: "위험 탐지 상황 시 Foreground Service 연동 우리WON/신한 SOL 금융앱 차단" },
+        { src: "/assets/onguard/screen_guardian_sms.png", caption: "사기 피해 방지를 위한 GPS 기반 실시간 보호자 연동 알림 전송" }
+      ],
+      demohome: "/assets/homepage.png",
+      gifs: {
+        detect: "/assets/detect.gif",
+        process: "/assets/process.gif"
+      }
+    },
+    sections: [
+      {
+        part: "Part I",
+        title: "Product Walkthrough",
+        subtitle: "상황별 능동형 대응 구조 및 시나리오",
+        items: [
+          { 
+            sectionNum: "SECTION 01", 
+            sectionTitle: "프레임 버퍼 ROI 판별 및 앙상블", 
+            content: "일반 영상통화 시 0.5초, 앱 내 통화 시 1초 간격으로 스크린 캡처를 수행하여 매 프레임마다 관심 영역(ROI)을 판단하고 가짜 확률 평균값으로 최종 딥페이크 여부를 정밀 판별.",
+            gif: "detect"
+          },
+          { 
+            sectionNum: "SECTION 02", 
+            sectionTitle: "온디바이스 STT 및 LLM 위험 태깅", 
+            content: "Qualcomm AI Hub 기반 Whisper BASE 모델로 음성 데이터를 기기 내부에서 STT 처리하여 개인정보 유출을 방지하고, 변화 감지 시에만 gpt-5-mini를 조건부 호출하여 실시간 보이스피싱 대화 위험 키워드 태그 생성.",
+            gif: "process" 
+          },
+          { 
+            sectionNum: "SECTION 03", 
+            sectionTitle: "시뮬레이터를 활용한 데이터 증강 송출", 
+            content: "GPU 서버를 통해 inswapper_128 모델로 실시간 페이스 스왑 딥페이크 영상을 제작하여 아고라(Agora) 기반의 웹 RTC 가상 수신 환경을 연동하고 실전 탐지 시연 기능 구현." ,
+            image: "demohome"
+          },
+        ],
+      },
+      {
+        part: "Part II",
+        title: "Engineering Deep Dive",
+        subtitle: "Grafana 실시간 텔레메트리 기반 하드웨어 병목 프로파일링 및 한계 극복",
+        items: [
+          { 
+            sectionNum: "SECTION 04", 
+            sectionTitle: "Avg Latency: 순수 CPU 스레드 연산 임계 도출 및 초기 웜업 지연 제어", 
+            content: "대시보드 상단에 기록된 8,050ms의 연산 임계를 극복하기 위해, 통화 시동과 동시에 즉각 추론이 가능하도록 앱 설치 시점에 모델 런타임 웜업 및 선적재 아키텍처를 설계하여 런칭 딜레이를 무력화했습니다." 
+          },
+          { 
+            sectionNum: "SECTION 05", 
+            sectionTitle: "Device Temperature: 모델 크기 경량화 및 단말 발열 제어를 위한 INT8 가속", 
+            content: "연산 집중에 의한 그라파나 Device Temperature 임계선 돌파 현상을 방지하기 위해, FP32 런타임 모델을 ONNX 런타임 기반 INT8로 경량화 양자화하여 단말 가용 리소스를 확보하고 모델 추론 속도를 약 40% 선제 감축했습니다." 
+          },
+          { 
+            sectionNum: "SECTION 06", 
+            sectionTitle: "Avg Latency by Model Type: Qualcomm QNN 아키텍처 및 HTP 단독 가속 최적화", 
+            content: "그라파나 메트릭에 기록된 가속 전후 지표(8,050ms ➔ 748ms)를 달성한 핵심 엔지니어링 파트입니다. 스냅드래곤 칩셋 하드웨어 계층에 연동되는 QNN 및 NNAPI 가속 엔진 파이프라인을 커스텀 빌드하여 최고속 연산 가속 장치인 HTP를 완전 선점하고, 가용 실패 시 GPU/CPU로 복원되는 폴백 시스템을 완성하여 최종 레이턴시 90.7% 단축을 달성했습니다.",
+            interactive: "latency_sim" 
+          },
+          { 
+            sectionNum: "SECTION 07", 
+            sectionTitle: "Android Security Constraints: 커널 오디오 수음 정책 우회 및 접근성 권한 제어", 
+            content: "안드로이드 미디어 오디오 패킷 획득 불가 한계를 해결하기 위해 통화 자동녹음 저장소 후킹 파이프라인을 우회 설계했으며, 위조 탐지 즉시 금융앱(우리WON, 신한 SOL) 인앱 세션을 실시간 후킹하여 강제 백그라운드 종료 조치 락 루프를 구현했습니다." 
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "sarvis",
+    index: "03",
     title: "SARVIS",
     subtitle: "Smart Monitor Arm with AI",
     tags: ["C++", "On-Device AI", "TensorRT", "Jetson Nano"],
@@ -124,46 +220,6 @@ export const PROJECTS = [
         items: [
           { sectionNum: "SECTION 03", sectionTitle: "TensorRT 파이프라인 구현", content: "FP32 모델을 FP16로 양자화(Quantization)하고, 호스트-디바이스 간 비동기 메모리 복사(Async Memcpy)를 통해 병목 현상 제거." },
           { sectionNum: "SECTION 04", sectionTitle: "멀티스레딩 데이터 큐", content: "영상 프레임 캡처, AI 추론, 모터 시리얼 통신 스레드를 분리하고 무잠금(Lock-Free) 큐로 스레드 간 데이터 동기화 최적화." },
-        ],
-      },
-    ],
-  },
-  {
-    id: "shutter",
-    index: "02",
-    title: "Shutter",
-    subtitle: "Real-time Deepfake Detector",
-    tags: ["Android NDK", "C++", "PyTorch Mobile", "Security"],
-    accentColor: "#16A34A",
-    accentLight: "#EDFAF3",
-    category: "CASE STUDY · MOBILE AI SECURITY",
-    headline: "실시간 비디오 콜 환경에서의 딥페이크 및 딥보이스 변조 탐지 시스템",
-    description: "Android 커널 레이어 단에서 화상 통화 패킷을 분석하여 인공지능 변조 여부를 실시간 서브 버퍼 단계에서 탐지 및 차단하는 모바일 보안 솔루션입니다.",
-    stats: [
-      { label: "아키텍처", value: "Clean / Android NDK" },
-      { label: "코어 엔진", value: "C++ / PyTorch" },
-      { label: "탐지 레이턴시", value: "45ms 이하" },
-      { label: "기간", value: "6주" },
-    ],
-    features: [
-      { icon: "🛡️", title: "실시간 하이재킹 탐지", desc: "Android Media Projection 및 오디오 트랙 후킹을 통해 데이터를 수집합니다.", badge: "Security" },
-      { icon: "🧠", title: "경량 변환 탐지 모델", desc: "MobileNetV3 기반 구조를 안드로이드 가속 엔진에 맞춤 이식했습니다.", badge: "Mobile AI" },
-    ],
-    sections: [
-      {
-        part: "Part I",
-        title: "Product Walkthrough",
-        subtitle: "모바일 인앱 구동 스크린 및 시나리오",
-        items: [
-          { sectionNum: "SECTION 01", sectionTitle: "백그라운드 모니터링", content: "보안 가이드라인을 준수하며 오버레이 팝업 형태로 경고를 표시하는 UI 구현." },
-        ],
-      },
-      {
-        part: "Part II",
-        title: "Engineering Deep Dive",
-        subtitle: "커널 및 프레임워크 한계 극복",
-        items: [
-          { sectionNum: "SECTION 02", sectionTitle: "Android Media Hooking", content: "가상 디스플레이 수크린 버퍼와 오디오 하드웨어 추상화 계층(HAL)의 스트림 데이터를 유실 없이 처리하는 프레임 캡처 파이프라인 설계." },
         ],
       },
     ],
